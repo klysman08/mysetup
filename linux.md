@@ -15,16 +15,6 @@ sudo apt-get install tree
 
 ```
 
-## Para backup da imagem WSL
-
-```jsx
-wsl --export "Ubuntu" C:\Users\klysm\desktop\backup.tar
-
-wsl --import "Ubuntu" C:\Users\klysm\desktop\backup.tar
-wsl --import Ubuntu C:\WSL C:\Users\klysm\Documents\WSL\wslbackup.tar
-
-C:\Users\klysm\AppData\Local\Packages\CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc\LocalState
-```
 
 ## Limitar recursos da maquina WSL .wslconfig
 
