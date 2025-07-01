@@ -1,7 +1,9 @@
 # My configs
 Here are my best configs for Windows with WSL and others tools
 
-# Linux - WSL
+- Step by step to build a new environment to code
+
+## Linux - WSL
 
 [GitHub - codeedu/wsl2-docker-quickstart: Guia rápido do WSL2 + Docker](https://github.com/codeedu/wsl2-docker-quickstart)
 
