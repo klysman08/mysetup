@@ -271,25 +271,6 @@ else
 fi
 
 # =============================================================================
-#  SECTION 15 — Gemini CLI
-# =============================================================================
-log_step "Gemini CLI"
-if command_exists gemini; then
-    log_warn "Gemini CLI already installed — skipping"
-else
-    # Prefer npm if available, fallback to brew
-    if command_exists npm; then
-        npm install -g @google/gemini-cli
-        log_success "Gemini CLI installed via npm"
-    elif command_exists brew; then
-        brew install gemini-cli
-        log_success "Gemini CLI installed via brew"
-    else
-        log_warn "Neither npm nor brew available — skipping Gemini CLI (re-run after Node install)"
-    fi
-fi
-
-# =============================================================================
 #  SECTION 16 — Set ZSH as default shell
 # =============================================================================
 log_step "Default Shell"
@@ -301,16 +282,38 @@ else
 fi
 
 # =============================================================================
-#  SECTION 17 — Alias placeholder (customize as needed)
+#  SECTION 17 — Oh My Zsh configuration and Alias placeholder
 # =============================================================================
+log_step "Oh My Zsh Configuration"
+
+# Add ZSH export path if missing
+if grep -q 'export ZSH="$HOME/.oh-my-zsh"' "$HOME/.zshrc" 2>/dev/null; then
+    log_warn "ZSH export path already exists — skipping"
+else
+    echo "" >> "$HOME/.zshrc"
+    echo "# Path to your oh-my-zsh installation" >> "$HOME/.zshrc"
+    echo 'export ZSH="$HOME/.oh-my-zsh"' >> "$HOME/.zshrc"
+    log_success "ZSH export path added"
+fi
+
+# Add Oh My Zsh source command if missing
+if grep -q 'source $ZSH/oh-my-zsh.sh' "$HOME/.zshrc" 2>/dev/null; then
+    log_warn "Oh My Zsh source command already exists — skipping"
+else
+    echo "" >> "$HOME/.zshrc"
+    echo "# Load Oh My Zsh" >> "$HOME/.zshrc"
+    echo 'source $ZSH/oh-my-zsh.sh' >> "$HOME/.zshrc"
+    log_success "Oh My Zsh source command added"
+fi
+
 log_step "Aliases"
-if grep -q "alias devkunumi" "$HOME/.zshrc" 2>/dev/null; then
-    log_warn "devkunumi alias already exists — skipping"
+if grep -q "alias dev" "$HOME/.zshrc" 2>/dev/null; then
+    log_warn "dev alias already exists — skipping"
 else
     echo "" >> "$HOME/.zshrc"
     echo "# Custom Aliases" >> "$HOME/.zshrc"
-    echo 'alias devkunumi="cd ~/pasta/"' >> "$HOME/.zshrc"
-    log_success "devkunumi alias added — update ~/pasta/ path as needed"
+    echo 'alias dev="cd ~/pasta/"' >> "$HOME/.zshrc"
+    log_success "dev alias added — update ~/pasta/ path as needed"
 fi
 
 # =============================================================================
@@ -321,7 +324,7 @@ echo -e "${GREEN}╔════════════════════
 echo -e "${GREEN}║        Setup Complete! Next steps:               ║${NC}"
 echo -e "${GREEN}╠══════════════════════════════════════════════════╣${NC}"
 echo -e "${GREEN}║  1. Re-login or open a new terminal              ║${NC}"
-echo -e "${GREEN}║  2. Run: source $ZSH/oh-my-zsh.sh                ║${NC}"
+echo -e "${GREEN}║  2. Run: source ~/.zshrc                         ║${NC}"
 echo -e "${GREEN}║  3. nvm install --lts && nvm use --lts           ║${NC}"
 echo -e "${GREEN}║  4. npm update -g                                ║${NC}"
 echo -e "${GREEN}║  5. Visit http://localhost:9000 for Portainer    ║${NC}"
